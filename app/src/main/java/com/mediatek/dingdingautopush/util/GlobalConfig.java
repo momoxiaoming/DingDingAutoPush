@@ -1,6 +1,6 @@
 package com.mediatek.dingdingautopush.util;
 
-import com.andr.common.tool.file.FileUtil;
+import com.andr.common.tool.file.FileUtils;
 
 import java.io.File;
 
@@ -17,12 +17,12 @@ public class GlobalConfig
 
     public static final String dingding_PakeName    = "com.alibaba.android.rimet";
 
-    public static final String MAIN_PATH            = FileUtil.getInstance().getExStoragePath()+ File.separator+"autodingding";
+    public static final String MAIN_PATH            = FileUtils.getExStoragePath()+ File.separator+"autodingding";
     public static final String CONFIG_PATH          = MAIN_PATH+ File.separator+"cfg";
     public static final String DOWN_FILE_PATH       = MAIN_PATH+ File.separator+"file";
     public static final String CONFIG_FILE_PATH     = CONFIG_PATH+ File.separator+"autodd.cfg";
     public static final String TASK_DATA_FILE_PATH  = CONFIG_PATH+ File.separator+"taskData.cfg";
-    public static final String LOG_FILE_PATH        = FileUtil.getInstance().getExStoragePath()+ File.separator+"logger";
+    public static final String LOG_FILE_PATH        = FileUtils.getExStoragePath()+ File.separator+"logger";
 
 
     public static final String MAIN_URL             = "http://api.momoxiaoming.com:9102/ddPush_andr/";

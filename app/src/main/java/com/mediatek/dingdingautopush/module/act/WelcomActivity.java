@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 
-import com.andr.common.tool.file.FileUtil;
+import com.andr.common.tool.file.FileUtils;
 import com.andr.common.tool.log.LoggerUtil;
 import com.andr.view.activity.BasePermissionActivity;
 import com.mediatek.dingdingautopush.R;
@@ -61,12 +61,12 @@ public class WelcomActivity extends BasePermissionActivity
     private void initData()
     {
 
-        FileUtil.getInstance().makeDirs(GlobalConfig.MAIN_PATH);
-        FileUtil.getInstance().makeDirs(GlobalConfig.CONFIG_PATH);
-        FileUtil.getInstance().makeDirs(GlobalConfig.DOWN_FILE_PATH);
+        FileUtils.makeDirs(GlobalConfig.MAIN_PATH);
+        FileUtils.makeDirs(GlobalConfig.CONFIG_PATH);
+        FileUtils.makeDirs(GlobalConfig.DOWN_FILE_PATH);
 
-        FileUtil.getInstance().deleteDirContent(GlobalConfig.DOWN_FILE_PATH);
-        FileUtil.getInstance().deleteDirContent(GlobalConfig.LOG_FILE_PATH);
+        FileUtils.deleteDirContent(GlobalConfig.DOWN_FILE_PATH);
+        FileUtils.deleteDirContent(GlobalConfig.LOG_FILE_PATH);
 
         LoggerUtil.initLogger("dingdingAssist",false,true);
 

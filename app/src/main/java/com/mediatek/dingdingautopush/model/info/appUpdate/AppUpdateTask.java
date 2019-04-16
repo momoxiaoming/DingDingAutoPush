@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.widget.Toast;
 
-import com.andr.common.tool.apk.ApkUtil;
+import com.andr.common.tool.apk.AppUtils;
 import com.andr.common.tool.encode.MD5Util;
 import com.andr.common.tool.json.GsonUtil;
 import com.andr.common.tool.net.okhttp.HttpManager;
@@ -49,7 +49,7 @@ public class AppUpdateTask extends BaseIntfTask
         {
             String url = dataInfo.getApkUrl();
             String appVer = dataInfo.getApkVer();
-            String appV = "" + ApkUtil.getInstance().getAppVersionCode(activity, activity.getPackageName());
+            String appV = "" + AppUtils.getAppVersionCode(activity, activity.getPackageName());
             if (Integer.valueOf(appVer) <= Integer.valueOf(appV))
             {
                 Toast.makeText(activity, "无需更新", Toast.LENGTH_SHORT).show();

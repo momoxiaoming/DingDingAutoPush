@@ -20,9 +20,9 @@ import org.json.JSONObject;
     public ApkInfo(Context context)
     {
         this.pkgName = context.getPackageName();
-        this.verCode = ApkUtil.getInstance().getAppVersionCode(context, pkgName);
-        this.apkName = ApkUtil.getInstance().getAppName(context);
-        this.apkVerName = ApkUtil.getInstance().getAppVersionName(context);
+        this.verCode = AppUtils.getAppVersionCode(context, pkgName);
+        this.apkName = AppUtils.getAppName(context);
+        this.apkVerName = AppUtils.getAppVersionName(context);
     }
 
     public JSONObject toJson()

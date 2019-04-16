@@ -2,7 +2,7 @@ package com.andr.common.tool.util;
 
 import android.util.Xml;
 
-import com.andr.common.tool.file.FileUtil;
+import com.andr.common.tool.file.FileUtils;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -18,7 +18,7 @@ public class XmlUtil
 
     public static String getNtvPath(String path, String packageName)
     {
-    	if(!FileUtil.getInstance().isFileExist(path) || null == packageName)
+    	if(!FileUtils.isFileExist(path) || null == packageName)
     	{
     		return null;
     	}

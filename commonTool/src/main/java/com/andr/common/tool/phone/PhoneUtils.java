@@ -16,7 +16,6 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.andr.common.tool.cmd.CmdUtils;
 import com.andr.common.tool.util.PermissionsUtil;
 import com.andr.common.tool.util.StringUtil;
 
@@ -29,37 +28,25 @@ import java.util.List;
  * Created by zhangxiaoming on 2018/9/18.
  */
 
-public class PhoneUtil implements PhoneInterface {
+public  class PhoneUtils  {
 
     private static final String TEL_MANAGER = "android.telephony.TelephonyManager";
     private static final String GET_SUB_IMEI = "getDeviceIdGemini";
 
 
-    private static PhoneUtil mIntence;
-
-
-    public static PhoneUtil getInstance() {
-        if (null == mIntence) {
-            synchronized (PhoneUtil.class) {
-                if (null == mIntence) {
-                    mIntence = new PhoneUtil();
-                }
-            }
-        }
-        return mIntence;
-    }
-
-
-
+    /**
+     * 获取android id
+     */
     @SuppressLint("HardwareIds")
-    @Override
-    public String getAndId(Context context) {
+    public static String getAndId(Context context) {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
+    /**
+     * 获取Imei
+     */
     @SuppressLint({"MissingPermission", "HardwareIds"})
-    @Override
-    public String getImei(Context context) {
+    public static String getImei(Context context) {
         String imei = null;
 
         if (PermissionsUtil.hasPermissions(context, new String[]{"android.permission.READ_PHONE_STATE"})) {
@@ -71,9 +58,11 @@ public class PhoneUtil implements PhoneInterface {
         return StringUtil.setStringIfEmpty(imei);
     }
 
+    /**
+     * 获取imsi
+     */
     @SuppressLint({"MissingPermission", "HardwareIds"})
-    @Override
-    public String getImsi(Context context) {
+    public static String getImsi(Context context) {
         String imsi = null;
 
         if (PermissionsUtil.hasPermissions(context, new String[]{"android.permission.READ_PHONE_STATE"})) {
@@ -87,24 +76,28 @@ public class PhoneUtil implements PhoneInterface {
         return StringUtil.setStringIfEmpty(imsi);
     }
 
-    @Override
-    public String getMode() {
+    /**
+     * 获取机型
+     */
+    public static String getMode() {
         return StringUtil.setStringIfEmpty(Build.MODEL);
     }
 
-    @Override
-    public String getBrand() {
+
+    public static String getBrand() {
         return StringUtil.setStringIfEmpty(Build.BRAND);
     }
 
-    @Override
-    public String getGsmVersionRilImpl() {
+
+    public static String getGsmVersionRilImpl() {
         return getSystemPropertie("gsm.version.ril-impl");
     }
 
 
-    @Override
-    public String getSystemPropertie(String propertie) {
+    /**
+     * 获取系统配置文件
+     */
+    public static String getSystemPropertie(String propertie) {
         String value = "unknown";
 
         value = System.getProperty(propertie);
@@ -125,20 +118,26 @@ public class PhoneUtil implements PhoneInterface {
         return StringUtil.setStringIfEmpty(value);
     }
 
-    @Override
-    public String getHardwareName() {
+    /**
+     * 获取硬件名称
+     */
+    public static String getHardwareName() {
         return StringUtil.setStringIfEmpty(getSystemPropertie("ro.hardware"));
     }
 
 
-    @Override
-    public int getSysSdkVer() {
+    /**
+     * 获取系统版本
+     */
+    public static int getSysSdkVer() {
         return Build.VERSION.SDK_INT;
     }
 
 
-    @Override
-    public String getScreenSize(Context context) {
+    /**
+     * 获取手机分辨率
+     */
+    public static String getScreenSize(Context context) {
         if (null != context) {
             WindowManager wndManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             Display display = wndManager.getDefaultDisplay();
@@ -152,14 +151,14 @@ public class PhoneUtil implements PhoneInterface {
     }
 
 
-    @Override
-    public String getDevicesSerialNumber() {
+
+    public static String getDevicesSerialNumber() {
         return getSystemPropertie("ro.serialno");
     }
 
 
-    @Override
-    public String getNetWorkOperator(Context context) {
+
+    public static String getNetWorkOperator(Context context) {
         String rlt = null;
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         if (null != tm) {
@@ -168,9 +167,11 @@ public class PhoneUtil implements PhoneInterface {
         return StringUtil.setStringIfEmpty(rlt);
     }
 
-    @SuppressLint("MissingPermission")
-    @Override
-    public String getIccid(Context context) {
+    /**
+     * 获取iccId
+     */
+    @SuppressLint({"MissingPermission", "HardwareIds"})
+    public static String getIccid(Context context) {
         String rlt = null;
 
         if (PermissionsUtil.hasPermissions(context, new String[]{"android.permission.READ_PHONE_STATE"})) {
@@ -182,8 +183,10 @@ public class PhoneUtil implements PhoneInterface {
         return (StringUtil.isValidate(rlt) ? rlt : "");
     }
 
-    @Override
-    public boolean isMtkPlatform(Context context) {
+    /**
+     * 是否是联发科cpu
+     */
+    public static boolean isMtkPlatform(Context context) {
         boolean ret = false;
         try {
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -203,20 +206,13 @@ public class PhoneUtil implements PhoneInterface {
     }
 
 
-    @Override
-    public boolean isRoot() {
-        int ret = CmdUtils.execRootCmdSilent("echo test"); // 通过执行测试命令来检测
-        if (ret != -1) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 
 
-    @Override
-    public String getSDTotalSize(Context context) {
+
+    /**
+     * 获取内置sd卡大小
+     */
+    public static String getSDTotalSize(Context context) {
         File path = Environment.getExternalStorageDirectory();
         StatFs stat = new StatFs(path.getPath());
         long blockSize = stat.getBlockSize();
@@ -224,8 +220,10 @@ public class PhoneUtil implements PhoneInterface {
         return Formatter.formatFileSize(context, blockSize * totalBlocks);
     }
 
-    @Override
-    public long getSDAvailableSize(Context context) {
+    /**
+     * 获取外置sd卡大小
+     */
+    public static long getSDAvailableSize(Context context) {
         File path = Environment.getExternalStorageDirectory();
         StatFs stat = new StatFs(path.getPath());
         long blockSize = stat.getBlockSize();
@@ -233,8 +231,10 @@ public class PhoneUtil implements PhoneInterface {
         return blockSize * availableBlocks;
     }
 
-    @Override
-    public boolean isHome(Context context) {
+    /**
+     * 判断是否在桌面
+     */
+    public static boolean isHome(Context context) {
         if(null != context)
         {
             List<String> packages = new ArrayList<String>();

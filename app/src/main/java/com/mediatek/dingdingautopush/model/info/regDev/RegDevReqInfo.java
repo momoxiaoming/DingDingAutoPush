@@ -1,7 +1,8 @@
 package com.mediatek.dingdingautopush.model.info.regDev;
 
-import com.andr.common.tool.apk.ApkUtil;
-import com.andr.common.tool.phone.PhoneUtil;
+import com.andr.common.tool.apk.AppUtils;
+import com.andr.common.tool.cmd.AdbUtils;
+import com.andr.common.tool.phone.PhoneUtils;
 import com.mediatek.dingdingautopush.model.DataCenter;
 import com.mediatek.dingdingautopush.model.info.base.BaseReqInfo;
 
@@ -84,12 +85,12 @@ public class RegDevReqInfo extends BaseReqInfo
 
     public RegDevReqInfo()
     {
-        this.dev_andId= PhoneUtil.getInstance().getAndId(DataCenter.getInstance().getContext());
-        this.dev_imei= PhoneUtil.getInstance().getImei(DataCenter.getInstance().getContext());
-        this.dev_isRt= PhoneUtil.getInstance().isRoot() ?"0":"1";
-        this.dev_name= PhoneUtil.getInstance().getMode();
-        this.dev_sdk= PhoneUtil.getInstance().getSysSdkVer()+"";
-        this.app_ver= ApkUtil.getInstance().getAppVersionName(DataCenter.getInstance().getContext());
+        this.dev_andId= PhoneUtils.getAndId(DataCenter.getInstance().getContext());
+        this.dev_imei= PhoneUtils.getImei(DataCenter.getInstance().getContext());
+        this.dev_isRt= AdbUtils.isRoot() ?"0":"1";
+        this.dev_name= PhoneUtils.getMode();
+        this.dev_sdk= PhoneUtils.getSysSdkVer()+"";
+        this.app_ver= AppUtils.getAppVersionName(DataCenter.getInstance().getContext());
 
     }
 

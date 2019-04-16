@@ -2,7 +2,7 @@ package com.mediatek.dingdingautopush.module.script;
 
 import android.content.Context;
 
-import com.andr.common.tool.apk.ApkUtil;
+import com.andr.common.tool.apk.AppUtils;
 import com.andr.common.tool.log.LoggerUtil;
 import com.auto.assist.accessibility.api.UiApi;
 import com.mediatek.dingdingautopush.model.DataCenter;
@@ -63,7 +63,7 @@ public class DDLoginScript
     {
         UiApi.backToDesk();
 
-        ApkUtil.getInstance().startApk(context, GlobalConfig.dingding_PakeName);
+        AppUtils.startApk(context, GlobalConfig.dingding_PakeName);
 
         if (!isManPage())
         {

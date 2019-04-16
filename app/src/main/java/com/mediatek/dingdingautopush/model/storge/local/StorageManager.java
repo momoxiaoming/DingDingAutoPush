@@ -1,6 +1,6 @@
 package com.mediatek.dingdingautopush.model.storge.local;
 
-import com.andr.common.tool.file.FileUtil;
+import com.andr.common.tool.file.FileUtils;
 import com.andr.common.tool.json.GsonUtil;
 import com.andr.common.tool.util.StringUtil;
 import com.mediatek.dingdingautopush.model.info.submtTask.SubmtTaskReqInfo;
@@ -17,26 +17,26 @@ public class StorageManager
 {
     public static void saveToken(String token)
     {
-        FileUtil.getInstance().writeStrToFile(token, GlobalConfig.CONFIG_FILE_PATH, false);
+        FileUtils.writeStrToFile(token, GlobalConfig.CONFIG_FILE_PATH, false);
 
     }
 
     public static String readToken()
     {
-        return FileUtil.getInstance().readFile(GlobalConfig.CONFIG_FILE_PATH);
+        return FileUtils.readFile(GlobalConfig.CONFIG_FILE_PATH);
 
     }
 
     public static void cleanTaskData()
     {
-        FileUtil.getInstance().deleteFile(GlobalConfig.TASK_DATA_FILE_PATH);
+        FileUtils.deleteFile(GlobalConfig.TASK_DATA_FILE_PATH);
     }
 
     public static void setTaskData(SubmtTaskReqInfo info)
     {
         if (info != null)
         {
-            FileUtil.getInstance().writeStrToFile(info.toJson(), GlobalConfig.TASK_DATA_FILE_PATH, false);
+            FileUtils.writeStrToFile(info.toJson(), GlobalConfig.TASK_DATA_FILE_PATH, false);
 
         }
 
@@ -44,7 +44,7 @@ public class StorageManager
 
     public static SubmtTaskReqInfo getTaskData()
     {
-        String readRlt = FileUtil.getInstance().readFile(GlobalConfig.TASK_DATA_FILE_PATH);
+        String readRlt = FileUtils.readFile(GlobalConfig.TASK_DATA_FILE_PATH);
         if (!StringUtil.isStringEmpty(readRlt))
         {
             return GsonUtil.parseJsonWithGson(readRlt, SubmtTaskReqInfo.class);

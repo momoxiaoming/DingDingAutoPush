@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.andr.common.tool.apk.ApkUtil;
+import com.andr.common.tool.apk.AppUtils;
 import com.andr.common.tool.util.StringUtil;
 import com.andr.view.dialog.LoadingDialogManager;
 import com.mediatek.dingdingautopush.R;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tokenText.setText(StorageManager.readToken());
             regiestBtn.setEnabled(false);
         }
-        versionText.setText("版本: " + ApkUtil.getInstance().getAppVersionName(this));
+        versionText.setText("版本: " + AppUtils.getAppVersionName(this));
 
         runText.setText(DataCenter.getInstance().isRun()?"运行中":"未运行");
     }

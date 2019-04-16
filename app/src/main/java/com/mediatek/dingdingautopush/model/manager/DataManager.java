@@ -3,7 +3,7 @@ package com.mediatek.dingdingautopush.model.manager;
 import android.app.Activity;
 import android.widget.Toast;
 
-import com.andr.common.tool.apk.ApkUtil;
+import com.andr.common.tool.apk.AppUtils;
 import com.andr.common.tool.log.LoggerUtil;
 import com.andr.view.dialog.LoadingDialogManager;
 import com.mediatek.dingdingautopush.model.DataCenter;
@@ -72,7 +72,7 @@ public class DataManager implements DataSource
 
         AppUpdateReqInfo reqAppUpdateInfo = new AppUpdateReqInfo();
 
-        reqAppUpdateInfo.setApp_ver(""+ApkUtil.getInstance().getAppVersionCode(DataCenter.getInstance().getContext(),DataCenter.getInstance().getContext().getPackageName()));
+        reqAppUpdateInfo.setApp_ver(""+ AppUtils.getAppVersionCode(DataCenter.getInstance().getContext(),DataCenter.getInstance().getContext().getPackageName()));
         reqAppUpdateInfo.setDev_token(StorageManager.readToken());
 
 
