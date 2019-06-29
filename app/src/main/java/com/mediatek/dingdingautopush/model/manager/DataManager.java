@@ -51,7 +51,6 @@ public class DataManager implements DataSource
     @Override
     public void regToken(DataCallBack<RegDevResInfo> dataCallBack)
     {
-
         RegDevReqInfo reqInfo = new RegDevReqInfo();
         new RegDevTask(reqInfo, dataCallBack);
     }
@@ -74,7 +73,6 @@ public class DataManager implements DataSource
 
         reqAppUpdateInfo.setApp_ver(""+ AppUtils.getAppVersionCode(DataCenter.getInstance().getContext(),DataCenter.getInstance().getContext().getPackageName()));
         reqAppUpdateInfo.setDev_token(StorageManager.readToken());
-
 
         final LoadingDialogManager dialogManager = new LoadingDialogManager(activity);
         dialogManager.show();

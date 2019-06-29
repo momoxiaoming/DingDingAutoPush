@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * 网络模块输出接口,采用okHttp
@@ -48,6 +49,7 @@ public class HttpManager
         this.context = context;
 
         //初始化OkHttpClient
+
         mOkHttpClient = new OkHttpClient().newBuilder()
                 .addInterceptor(new RetryInterceptor(2))
                 .connectTimeout(5, TimeUnit.SECONDS)//设置连接超时时间

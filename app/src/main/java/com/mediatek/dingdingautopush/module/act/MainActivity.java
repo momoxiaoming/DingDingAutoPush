@@ -95,10 +95,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (keyCode == KeyEvent.KEYCODE_BACK)
         {
             moveTaskToBack(false);
+
             return false;
         }
         return super.onKeyDown(keyCode, event);
     }
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if(keyCode == KeyEvent.KEYCODE_BACK){
+//            Intent i = new Intent(Intent.ACTION_MAIN);
+//            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            i.addCategory(Intent.CATEGORY_HOME);
+//            startActivity(i);
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
+
+
+
+
     @Override
     public void onClick(View view)
     {
@@ -133,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             startService(new Intent(this, TaskService.class));
             moveTaskToBack(false);
-
+//            onBackPressed();
         } else
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -171,7 +188,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             {
                 dialogManager.dismiss();
                 Toast.makeText(MainActivity.this, err, Toast.LENGTH_SHORT).show();
-
             }
         });
     }

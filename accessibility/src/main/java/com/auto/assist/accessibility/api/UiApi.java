@@ -816,7 +816,7 @@ public class UiApi
             ApiUtil.sleepTime(1000);
             i--;
         }
-
+        LogUtil.D("回退超时..");
         return false;
 
     }

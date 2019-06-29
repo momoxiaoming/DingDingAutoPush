@@ -6,7 +6,6 @@ import android.net.Uri;
 
 import com.andr.common.tool.log.LoggerUtil;
 import com.auto.assist.accessibility.api.UiApi;
-import com.mediatek.dingdingautopush.model.DataCenter;
 import com.mediatek.dingdingautopush.util.GlobalConfig;
 
 import java.net.URLEncoder;
@@ -24,28 +23,30 @@ public class DDSignScript
     private String taskId;
     private String desc;
     private String type;
-    private boolean state=false;
+    private boolean state = false;
 
-    private Context context = DataCenter.getInstance().getContext();
+    private Context context;
 
 
-    public DDSignScript(String taskId, String type)
+    public DDSignScript(Context context,String taskId, String type)
     {
         this.taskId = taskId;
         this.type = type;
+        this.context=context;
     }
 
 
-    public void doAction(ScriptCallBack callBack)
+    public void doAction(final ScriptCallBack callBack)
     {
 
         int i = 0;
-        while (i < 3)   //执行三次
+        while (i < 2)   //执行三次
         {
             doTask();
 
             if (state)
             {
+                UiApi.backToDesk();
                 callBack.onResult(true, taskId, desc);
             }
 
@@ -58,20 +59,24 @@ public class DDSignScript
             }
             i++;
         }
+
+        UiApi.backToDesk();
         callBack.onResult(false, taskId, desc);
+
 
     }
 
     private void doTask()
     {
         UiApi.backToDesk();
+
         doDingdingPage();
 
         if (findControtPage())
         {
             try
             {
-                Thread.sleep(8000);   //等待
+                Thread.sleep(2000);   //等待
                 clckIknowDilog();
                 signTask();
             } catch (InterruptedException e)
@@ -119,7 +124,7 @@ public class DDSignScript
         {
             //
             //确定早退
-            UiApi.clickNodeByTextWithTimeOut(5000,"确定");
+            UiApi.clickNodeByTextWithTimeOut(5000, "确定");
 
             if (alertResult())
             {
@@ -148,7 +153,7 @@ public class DDSignScript
         {
             //
             //确定早退
-            UiApi.clickNodeByTextWithTimeOut(5000,"确定");
+            UiApi.clickNodeByTextWithTimeOut(5000, "确定");
 
             if (alertResult())
             {
@@ -173,7 +178,8 @@ public class DDSignScript
     //上班打卡
     private void up_sign()
     {
-        boolean isrlt = UiApi.clickNodeByDesWithTimeOut(10000, "上班打卡");
+        LoggerUtil.d("正在查找并上班打卡按钮..");
+        boolean isrlt = UiApi.clickNodeByDesWithTimeOut(5000, "上班打卡");
         if (isrlt)
         {
             if (alertResult())
@@ -195,10 +201,10 @@ public class DDSignScript
         }
     }
 
-    //上班打卡
+    //xia班打卡
     private void down_sign()
     {
-        boolean isrlt = UiApi.clickNodeByDesWithTimeOut(10000, "下班打卡");
+        boolean isrlt = UiApi.clickNodeByDesWithTimeOut(5000, "下班打卡");
         if (isrlt)
         {
             if (alertResult())
@@ -219,16 +225,6 @@ public class DDSignScript
             LoggerUtil.d("未找到下班打卡按钮");
         }
     }
-
-
-
-
-
-
-
-
-
-
 
 
     //点击掉我知道了的弹窗
@@ -261,6 +257,5 @@ public class DDSignScript
         context.startActivity(intent);
 
     }
-
 
 }

@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import com.andr.common.tool.file.FileUtils;
 import com.andr.common.tool.log.LoggerUtil;
 import com.andr.view.activity.BasePermissionActivity;
+import com.mediatek.dingdingautopush.BuildConfig;
 import com.mediatek.dingdingautopush.R;
 import com.mediatek.dingdingautopush.util.GlobalConfig;
 
@@ -68,7 +69,7 @@ public class WelcomActivity extends BasePermissionActivity
         FileUtils.deleteDirContent(GlobalConfig.DOWN_FILE_PATH);
         FileUtils.deleteDirContent(GlobalConfig.LOG_FILE_PATH);
 
-        LoggerUtil.initLogger("dingdingAssist",false,true);
+
 
 
     }

@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.andr.common.tool.apk.AppUtils;
 import com.andr.common.tool.json.GsonUtil;
 import com.andr.common.tool.log.LoggerUtil;
 import com.andr.common.tool.util.StringUtil;
@@ -41,6 +42,7 @@ public class TaskService extends Service implements ScriptCallBack
     public void onCreate()
     {
         super.onCreate();
+        LoggerUtil.d("服务启动.当前进程:"+android.os.Process.myPid());
         startWork();
 
     }
@@ -48,6 +50,8 @@ public class TaskService extends Service implements ScriptCallBack
     @Override
     public boolean stopService(Intent name)
     {
+
+
         isRun = false;
         DataCenter.getInstance().setRun(false);
 
@@ -63,8 +67,11 @@ public class TaskService extends Service implements ScriptCallBack
             {
                 LoggerUtil.d("已启动");
                 DataCenter.getInstance().setRun(true);
+
+
                 while (isRun)
                 {
+                    LoggerUtil.d("监测当前线程: "+Thread.currentThread());
                     DataManager.getInstance().pullTask(new DataSource.DataCallBack<PullTaskResInfo>()
                     {
                         @Override
@@ -185,13 +192,15 @@ public class TaskService extends Service implements ScriptCallBack
                 LoggerUtil.d("任务提交成功");
                 StorageManager.cleanTaskData();
 
+                //回到自己程序
+                AppUtils.startApk(DataCenter.getInstance().getContext(),DataCenter.getInstance().getContext().getPackageName());
             }
 
             @Override
             public void onFailed(String err)
             {
                 LoggerUtil.d("提交失败:"+err);
-
+                AppUtils.startApk(DataCenter.getInstance().getContext(),DataCenter.getInstance().getContext().getPackageName());
             }
         });
     }
@@ -201,13 +210,15 @@ public class TaskService extends Service implements ScriptCallBack
         LoginDataInfo taskData = dataInfo.getTaskData();
         if (taskData == null)
         {
-            LoggerUtil.d("登录数据为空");
+            LoggerUtil.d("打卡任务数据为空");
             return;
         }
 
 
-        DDSignScript ddSignScript = new DDSignScript(dataInfo.getTaskId(), dataInfo.getTaskType());
+
+        DDSignScript ddSignScript = new DDSignScript(getApplicationContext(),dataInfo.getTaskId(), dataInfo.getTaskType());
         ddSignScript.doAction(this);
+
     }
 
     private void doLoginAction(PullTaskResInfo.DataInfo dataInfo) throws Exception
