@@ -2,6 +2,9 @@
 
 本项目仅支持wifi打卡!!!!!
 
+https://upload-images.jianshu.io/upload_images/1978245-409d19df76e4ba8f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
 使用说明:
 
 1. 手机安装apk,填入公司名称,注册程序,启动程序,然后按照app上的说明关注小程序即可实现远程控制
