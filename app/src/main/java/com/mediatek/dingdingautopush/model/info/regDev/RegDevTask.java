@@ -32,9 +32,14 @@ public class RegDevTask extends BaseIntfTask
                     RegDevResInfo.DataInfo dataInfo= GsonUtil.parseJsonWithGson(resData,RegDevResInfo.DataInfo.class);
                     if(dataInfo!=null){
                         String token = dataInfo.getDevToken();
-                        StorageManager.saveToken(token);
-                        callBack.onSucess(regDevResInfo);
-                        return;
+                        if(StorageManager.saveToken(token)){
+                            callBack.onSucess(regDevResInfo);
+                        }else{
+                            callBack.onFailed("设备码写入失败");
+
+                        }
+                       return;
+
                     }
 
                 }

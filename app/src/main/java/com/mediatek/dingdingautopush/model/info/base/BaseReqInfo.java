@@ -1,7 +1,5 @@
 package com.mediatek.dingdingautopush.model.info.base;
 
-import com.andr.common.tool.json.GsonUtil;
-
 /**
  * <pre>
  *     author: momoxiaoming

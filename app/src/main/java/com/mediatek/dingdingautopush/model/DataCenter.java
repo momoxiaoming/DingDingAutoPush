@@ -19,6 +19,8 @@ public class DataCenter
 
     private boolean isRun;
 
+
+
     public static DataCenter getInstance()
     {
         if (null == mIntence)

@@ -15,9 +15,9 @@ import com.mediatek.dingdingautopush.util.GlobalConfig;
  */
 public class StorageManager
 {
-    public static void saveToken(String token)
+    public static boolean saveToken(String token)
     {
-        FileUtils.writeStrToFile(token, GlobalConfig.CONFIG_FILE_PATH, false);
+      return FileUtils.writeStrToFile(token, GlobalConfig.CONFIG_FILE_PATH, false);
 
     }
 

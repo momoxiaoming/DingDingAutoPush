@@ -32,6 +32,8 @@ public class TaskService extends Service implements ScriptCallBack
 
     private boolean isRun = true;
 
+    private boolean isResult = false;
+
     @Override
     public IBinder onBind(Intent intent)
     {
@@ -42,7 +44,7 @@ public class TaskService extends Service implements ScriptCallBack
     public void onCreate()
     {
         super.onCreate();
-        LoggerUtil.d("服务启动.当前进程:"+android.os.Process.myPid());
+        LoggerUtil.d("服务启动.当前进程:" + android.os.Process.myPid());
         startWork();
 
     }
@@ -60,6 +62,8 @@ public class TaskService extends Service implements ScriptCallBack
 
     public void startWork()
     {
+
+
         new Thread(new Runnable()
         {
             @Override
@@ -71,7 +75,7 @@ public class TaskService extends Service implements ScriptCallBack
 
                 while (isRun)
                 {
-                    LoggerUtil.d("监测当前线程: "+Thread.currentThread());
+                    LoggerUtil.d("监测当前线程: " + Thread.currentThread());
                     DataManager.getInstance().pullTask(new DataSource.DataCallBack<PullTaskResInfo>()
                     {
                         @Override
@@ -90,6 +94,20 @@ public class TaskService extends Service implements ScriptCallBack
                     try
                     {
                         Thread.sleep(5000);
+
+
+                        if (!isResult)
+                        {
+//                            // 重启手机
+//                            long runT = Long.valueOf(TimeUtils.getPhRunTime());
+//                            if (runT > GlobalConfig.MAX_PHONE_RUMTIME)
+//                            {
+//                                CmdUtils.execRootCmdSilent("reboot");
+//                            }
+
+
+                        }
+
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();
@@ -163,7 +181,7 @@ public class TaskService extends Service implements ScriptCallBack
     {
 
         SubmtTaskReqInfo notInfo = StorageManager.getTaskData();
-        if (notInfo != null&&"1".equals(notInfo.getTaskState()))
+        if (notInfo != null && "1".equals(notInfo.getTaskState()))
         {
             LoggerUtil.d("监测到有通知结果,有限通知结果提交");
             submt(notInfo);
@@ -193,14 +211,14 @@ public class TaskService extends Service implements ScriptCallBack
                 StorageManager.cleanTaskData();
 
                 //回到自己程序
-                AppUtils.startApk(DataCenter.getInstance().getContext(),DataCenter.getInstance().getContext().getPackageName());
+                AppUtils.startApk(DataCenter.getInstance().getContext(), DataCenter.getInstance().getContext().getPackageName());
             }
 
             @Override
             public void onFailed(String err)
             {
-                LoggerUtil.d("提交失败:"+err);
-                AppUtils.startApk(DataCenter.getInstance().getContext(),DataCenter.getInstance().getContext().getPackageName());
+                LoggerUtil.d("提交失败:" + err);
+                AppUtils.startApk(DataCenter.getInstance().getContext(), DataCenter.getInstance().getContext().getPackageName());
             }
         });
     }
@@ -215,8 +233,7 @@ public class TaskService extends Service implements ScriptCallBack
         }
 
 
-
-        DDSignScript ddSignScript = new DDSignScript(getApplicationContext(),dataInfo.getTaskId(), dataInfo.getTaskType());
+        DDSignScript ddSignScript = new DDSignScript(getApplicationContext(),dataInfo);
         ddSignScript.doAction(this);
 
     }

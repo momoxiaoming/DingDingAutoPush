@@ -21,6 +21,7 @@ public class PullTaskResInfo extends BaseResInfo
         private String taskId;
         private LoginDataInfo taskData;
         private String taskType;
+        private String company; //公司名称.新增字段
 
         public String getTaskId()
         {
@@ -50,6 +51,16 @@ public class PullTaskResInfo extends BaseResInfo
         public void setTaskType(String taskType)
         {
             this.taskType = taskType;
+        }
+
+        public String getCompany()
+        {
+            return company;
+        }
+
+        public void setCompany(String company)
+        {
+            this.company = company;
         }
     }
 

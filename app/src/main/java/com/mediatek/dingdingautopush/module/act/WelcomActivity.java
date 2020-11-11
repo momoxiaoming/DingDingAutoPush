@@ -7,9 +7,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import com.andr.common.tool.file.FileUtils;
-import com.andr.common.tool.log.LoggerUtil;
 import com.andr.view.activity.BasePermissionActivity;
-import com.mediatek.dingdingautopush.BuildConfig;
 import com.mediatek.dingdingautopush.R;
 import com.mediatek.dingdingautopush.util.GlobalConfig;
 

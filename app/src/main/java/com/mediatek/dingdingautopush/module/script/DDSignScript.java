@@ -5,8 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.andr.common.tool.log.LoggerUtil;
+import com.andr.common.tool.util.StringUtil;
 import com.auto.assist.accessibility.api.UiApi;
-import com.mediatek.dingdingautopush.util.GlobalConfig;
+import com.mediatek.dingdingautopush.model.info.pullTask.PullTaskResInfo;
 
 import java.net.URLEncoder;
 
@@ -23,16 +24,18 @@ public class DDSignScript
     private String taskId;
     private String desc;
     private String type;
+    private String company;
     private boolean state = false;
 
     private Context context;
 
 
-    public DDSignScript(Context context,String taskId, String type)
+    public DDSignScript(Context context, PullTaskResInfo.DataInfo dataInfo)
     {
-        this.taskId = taskId;
-        this.type = type;
-        this.context=context;
+        this.taskId = dataInfo.getTaskId();
+        this.type = dataInfo.getTaskType();
+        this.company= StringUtil.isStringEmpty(dataInfo.getCompany())?"":dataInfo.getCompany();
+        this.context = context;
     }
 
 
@@ -72,24 +75,20 @@ public class DDSignScript
 
         doDingdingPage();
 
-        if (findControtPage())
+        try
         {
-            try
-            {
-                Thread.sleep(2000);   //等待
-                clckIknowDilog();
-                signTask();
-            } catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
+            Thread.sleep(5000);   //等待
 
 
-        } else
+            findControtPage(company);
+            clckIknowDilog();
+            signTask();
+
+
+        } catch (InterruptedException e)
         {
-            desc = "未找到公司选择窗节点";
+            e.printStackTrace();
         }
-
 
     }
 
@@ -149,9 +148,12 @@ public class DDSignScript
     private void update_down_sign()
     {
         boolean isrlt = UiApi.clickNodeByDesWithTimeOut(10000, "下班打卡");
+
+
         if (isrlt)
         {
             //
+            LoggerUtil.d("已找到下班打卡按钮,开始点击");
             //确定早退
             UiApi.clickNodeByTextWithTimeOut(5000, "确定");
 
@@ -205,6 +207,7 @@ public class DDSignScript
     private void down_sign()
     {
         boolean isrlt = UiApi.clickNodeByDesWithTimeOut(5000, "下班打卡");
+
         if (isrlt)
         {
             if (alertResult())
@@ -241,10 +244,10 @@ public class DDSignScript
     }
 
 
-    private boolean findControtPage()
+    private boolean findControtPage(String name)
     {
 
-        return UiApi.clickNodeByTextWithTimeOut(20000, GlobalConfig.DOCOMPENT_NAME);
+        return UiApi.clickNodeByTextWithTimeOut(5000, name);
 
     }
 

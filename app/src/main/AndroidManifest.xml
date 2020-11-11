@@ -3,27 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mediatek.dingdingautopush">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.REBOOT" />
 
     <application
         android:name="com.mediatek.dingdingautopush.module.act.HtApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:testOnly="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning" >
-        <activity android:name=".module.act.WelcomActivity" android:theme="@style/NoActionBar">
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".module.act.WelcomActivity"
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".module.act.MainActivity" android:launchMode="singleTop"/>
+        <activity
+            android:name=".module.act.MainActivity"
+            android:launchMode="singleTop" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -34,6 +41,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
         <service
             android:name=".module.service.MainAccessService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
@@ -46,7 +54,15 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <service android:name="com.mediatek.dingdingautopush.module.service.TaskService"/>
+        <service android:name="com.mediatek.dingdingautopush.module.service.TaskService" />
+
+
+        <receiver android:name=".module.service.MainReciver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
